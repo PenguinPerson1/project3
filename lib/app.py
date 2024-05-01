@@ -8,6 +8,7 @@ class App:
     def __init__(self):
         self.setup = Setup()
         self.player = Player([Fighter.all['knight']() for _ in range(3)])
+        self.restart = True
 
     def run(self):
         self.main_menu()
@@ -25,18 +26,36 @@ class App:
             ])
 
     def stage1(self):
-        "You've Started Level 1"
         enemies = self.setup.prep_stage1()
-        while len(self.player.alive_fighters) > 0 and len(enemies.alive_fighters) > 0:
-            Turn.player_turn(self.player,enemies)
-            if not (len(self.player.alive_fighters) > 0 and len(enemies.alive_fighters) > 0):
-                break
-            Turn.enemy_turn(enemies,self.player.current_fighter)
-        print("Level 1 Over")
+        while self.restart == True:
+            enemies.reset()
+            self.player.reset()
+            print("You've Started Level 1")
+            if Turn.battle_loop(self.player,enemies):
+                self.between_levels(self.stage2)
+            else: self.restart_level(self.stage1)
+
+    def stage2(self):
+        pass
+
+    def restart_level(self,level):
+        print('You Died... Retry?')
+        if level == self.stage1:
+            print('1. Retry Level')
+            print('2. Save & Quit')
+
+            Menu.choose_option(Menu.str_range(2),[
+                lambda: None,
+                self.exit_program
+                ])
+
+    def between_levels(self,next_level):
+        print('You Won!!!')
 
     def resume_game(self):
         pass
 
     def exit_program(self):
-        pass
+        self.restart = False
+        print("goodbye!")
 

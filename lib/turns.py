@@ -1,5 +1,15 @@
 from lib.menu import Menu
 class Turn:
+
+    @classmethod
+    def battle_loop(cls,player,enemies):
+        while len(player.alive_fighters) > 0 and len(enemies.alive_fighters) > 0:
+            Turn.player_turn(player,enemies)
+            if not (len(player.alive_fighters) > 0 and len(enemies.alive_fighters) > 0):
+                break
+            Turn.enemy_turn(enemies,player.current_fighter)
+        return True if(len(enemies.alive_fighters)) == 0 else False
+
     @classmethod
     def enemy_turn(cls,enemies,player_fighter):
         enemies.do_random_action(player_fighter)

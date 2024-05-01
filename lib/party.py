@@ -14,6 +14,14 @@ class Party:
         print("they have been removed from battle")
         if len(self.alive_fighters) == 0:
             return True
+        
+    def reset(self):
+        self.alive_fighters = self.fighters.copy()
+        for fighter in self.fighters:
+            fighter.hp = fighter.hp_max
+            fighter.mp = fighter.mp_max
+            fighter.condition = None
+            fighter.on_death = lambda f: self.kill_fighter(f)
 
 class Player(Party):
     def add_fighter(self,fighter):
