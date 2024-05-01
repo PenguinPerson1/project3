@@ -36,7 +36,7 @@ class App:
             else: self.restart_level(self.stage1)
 
     def stage2(self):
-        pass
+        print("stage 2")
 
     def restart_level(self,level):
         print('You Died... Retry?')
@@ -52,6 +52,19 @@ class App:
     def between_levels(self,next_level):
         print('You Won!!!')
         self.restart = False
+        print("Do you want to edit your team?")
+        print('1. Edit Team')
+        print('2. Continue to Next Round')
+        print('3. Save & Quit')
+
+        Menu.choose_option(Menu.str_range(3),[
+            self.edit_team,
+            next_level,
+            self.exit_program
+            ])
+        
+    def edit_team(self):
+        pass
 
     def resume_game(self):
         pass
