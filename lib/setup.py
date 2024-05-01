@@ -36,7 +36,7 @@ class Setup:
 
         goblin = Fighter.add_func("goblin",Type.all["grass"],120,50,
                                   [Attack.all['stab'],Attack.all['stab']],
-                                  [Magic.all['poisoned_blade'],Magic.all['poisoned_blade']])
+                                  [Magic.all['leech_life'],Magic.all['poisoned_blade']])
 
         return Enemy([goblin(),goblin(),goblin()])
     

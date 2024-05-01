@@ -14,5 +14,4 @@ class Menu:
 
         for i in range(len(options)):
             if user_input == options[i]:
-                print(i)
                 results[i]()

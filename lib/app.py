@@ -51,6 +51,7 @@ class App:
 
     def between_levels(self,next_level):
         print('You Won!!!')
+        self.restart = False
 
     def resume_game(self):
         pass
