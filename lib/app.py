@@ -28,8 +28,6 @@ class App:
     def stage1(self):
         enemies = self.setup.prep_stage1()
         while self.restart == True:
-            enemies.reset()
-            self.player.reset()
             print("You've Started Level 1")
             if Turn.battle_loop(self.player,enemies):
                 self.between_levels(self.stage2)

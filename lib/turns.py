@@ -3,11 +3,13 @@ class Turn:
 
     @classmethod
     def battle_loop(cls,player,enemies):
+        enemies.reset()
+        player.reset()
         while len(player.alive_fighters) > 0 and len(enemies.alive_fighters) > 0:
-            Turn.player_turn(player,enemies)
+            cls.player_turn(player,enemies)
             if not (len(player.alive_fighters) > 0 and len(enemies.alive_fighters) > 0):
                 break
-            Turn.enemy_turn(enemies,player.current_fighter)
+            cls.enemy_turn(enemies,player.current_fighter)
         return True if(len(enemies.alive_fighters)) == 0 else False
 
     @classmethod
