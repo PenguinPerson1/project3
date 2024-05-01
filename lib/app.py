@@ -63,17 +63,26 @@ class App:
         
     def edit_team(self):
         print("Which Fighter would you like to replace?")
-        def create_swap(i):
-            return lambda: self.swap_fighter(i)
-        li = []
-        for i, fighter in enumerate(self.player.fighters):
+        for i, fighter in enumerate(self.player.fighters,start=1):
             print(i,end=": ")
             print(fighter.name)
-            li.append(create_swap(fighter))
 
-        Menu.choose_option(Menu.str_range(len(self.player.fighters)),li)
+        swap_out = Menu.return_option(Menu.str_range(len(self.player.fighters)))
+        print(swap_out)
+
+        print("Which fighter would you like to replace them with?")
+        for i, fighter in enumerate(Fighter.all.keys(),start=1):
+            print(i,end=": ")
+            print(fighter)
+
+        swap_in = Menu.return_option(Menu.str_range(len(self.player.fighters)))
+        print(swap_in)
+
+        self.swap_fighter(self.player.fighters[int(swap_out)],list(Fighter.all.values())[int(swap_in)-1])
             
-    def swap_fighter(self,fighter):
+    def swap_fighter(self,f_out,f_in):
+        print(f_out.name,end=" swaps with ")
+        print(f_in().name)
         pass
 
     def resume_game(self):

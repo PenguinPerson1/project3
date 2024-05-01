@@ -38,5 +38,5 @@ class Setup:
                                   [Attack.all['stab'],Attack.all['stab']],
                                   [Magic.all['leech_life'],Magic.all['poisoned_blade']])
 
-        return Enemy([goblin(),goblin(),goblin()])
+        return Enemy([goblin()])
     
