@@ -56,33 +56,46 @@ class App:
         print('3. Save & Quit')
 
         Menu.choose_option(Menu.str_range(3),[
-            self.edit_team,
+            lambda: self.edit_team(next_level),
             next_level,
             self.exit_program
             ])
         
-    def edit_team(self):
-        print("Which Fighter would you like to replace?")
-        for i, fighter in enumerate(self.player.fighters,start=1):
-            print(i,end=": ")
-            print(fighter.name)
+    def edit_team(self,next_level):
+        repeat = True
+        while repeat:
+            print("Which Fighter would you like to replace?")
+            for i, fighter in enumerate(self.player.fighters,start=1):
+                print(i,end=": ")
+                print(fighter.name)
 
-        swap_out = Menu.return_option(Menu.str_range(len(self.player.fighters)))
-        print(swap_out)
+            swap_out = int(Menu.return_option(Menu.str_range(len(self.player.fighters)))) - 1
+            print(swap_out)
 
-        print("Which fighter would you like to replace them with?")
-        for i, fighter in enumerate(Fighter.all.keys(),start=1):
-            print(i,end=": ")
-            print(fighter)
+            print("Which fighter would you like to replace them with?")
+            for i, fighter in enumerate(Fighter.all.keys(),start=1):
+                print(i,end=": ")
+                print(fighter)
 
-        swap_in = Menu.return_option(Menu.str_range(len(self.player.fighters)))
-        print(swap_in)
+            swap_in = int(Menu.return_option(Menu.str_range(len(self.player.fighters)))) - 1
+            print(swap_in)
 
-        self.swap_fighter(self.player.fighters[int(swap_out)],list(Fighter.all.values())[int(swap_in)-1])
-            
-    def swap_fighter(self,f_out,f_in):
-        print(f_out.name,end=" swaps with ")
-        print(f_in().name)
+            self.swap_fighter(swap_out,list(Fighter.all.values())[swap_in])
+
+            print('Would you like to replace a different fighter?')
+            print("1. Replace Another")
+            print("2. Continue to Next Level")
+            if Menu.return_option(Menu.str_range(2)) == "1":
+                repeat = True
+            else:
+                repeat = False
+        next_level()
+
+    def swap_fighter(self,n_out,f_in):
+        self.player.fighters.pop(n_out)
+        self.player.fighters.insert(n_out,f_in())
+        print(self.player.fighters[n_out].name,end=" swaps with ")
+        print(self.player.fighters[-1].name)
         pass
 
     def resume_game(self):
