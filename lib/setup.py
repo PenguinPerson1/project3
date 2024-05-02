@@ -1,11 +1,12 @@
 from lib.type import Type
 from lib.fighter import Fighter
 from lib.actions import Attack,Magic
-from lib.party import Enemy
+from lib.party import Enemy, Player
 from lib.conditions import Condition
 
 class Setup:
-    def __init__(self):
+    @classmethod
+    def prep_stage0(cls):
         Type("normal",[],[])
         Type("fire",["water"],["grass"])
 
@@ -23,7 +24,10 @@ class Setup:
         # Knight is always available for the player to use
         Fighter.add_available(["knight"])
 
-    def prep_stage1(self):
+        return Player([Fighter.all['knight']() for _ in range(1)])
+
+    @classmethod
+    def prep_stage1(cls):
         Type("grass",["fire"],["water"])
 
         Condition('poison',lambda f,i : f.take_damage(Type.all["grass"],i),"poisoned")
@@ -43,7 +47,8 @@ class Setup:
 
         return Enemy([goblin()])
     
-    def prep_stage2(self):
+    @classmethod
+    def prep_stage2(cls):
         # Whenever players are stage 2 or later, they have access to goblin
         Fighter.add_available(["goblin"])
 
