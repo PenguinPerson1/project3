@@ -60,7 +60,6 @@ class App:
 
     def between_levels(self,next_level):
         print('You Won!!!')
-        self.restart = False
         print("Do you want to edit your team?")
         print('1. Edit Team')
         print('2. Continue to Next Round')
@@ -114,4 +113,5 @@ class App:
 
     def exit_program(self):
         print("goodbye!")
+        exit()
 

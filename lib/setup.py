@@ -41,4 +41,18 @@ class Setup:
         return Enemy([goblin()])
     
     def prep_stage2(self):
-        return Enemy([Fighter.all['goblin']()])
+        Type("water",["grass"],["fire"])
+
+        Condition('regen',lambda f,i : f.heal(i),"regenerating")
+
+        Attack('sea_spray',Type.all['water'],25)
+
+        Magic('water_of_life',Type.all['water'],0,50,
+              lambda c,_: c.set_condition(Condition.all['regen'],5),
+              " and starts healing wounds")
+        
+        mermaid = Fighter.add_func("mermaid",Type.all['water'],250,50,
+                                 [Attack.all['stab'],Attack.all['sea_spray']],
+                                 [Magic.all['water_of_life'],Magic.all['water_of_life']])
+        
+        return Enemy([mermaid()])
