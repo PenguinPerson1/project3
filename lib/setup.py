@@ -40,3 +40,5 @@ class Setup:
 
         return Enemy([goblin()])
     
+    def prep_stage2(self):
+        return Enemy([Fighter.all['goblin']()])
