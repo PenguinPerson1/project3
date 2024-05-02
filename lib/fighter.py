@@ -5,6 +5,7 @@ import math
 
 class Fighter:
     all={}
+    available = {}
     def __init__(self,name:str,type,hp_max:int,mp_max:int,attacks,magics):
         self.name = name
         self.type = type
@@ -76,3 +77,8 @@ class Fighter:
     def add_func(cls,name:str,type,hp_max:int,mp_max:int,attacks,magics):
         cls.all[name] = lambda:cls(name,type,hp_max,mp_max,attacks,magics)
         return cls.all[name]
+    
+    @classmethod
+    def add_available(cls,names:list):
+        for name in names:
+            cls.available[name] = cls.all[name]
