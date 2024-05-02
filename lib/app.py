@@ -30,7 +30,7 @@ class App:
         while restart == True:
             print("You've Started Level 1")
             if Turn.battle_loop(self.player,enemies):
-                Fighter.add_available("goblin")
+                Fighter.add_available(["goblin"])
                 self.between_levels(self.stage2)
             else: restart = self.restart_level(True)
 
@@ -40,7 +40,7 @@ class App:
         while restart == True:
             print("You've Started Level 2")
             if Turn.battle_loop(self.player,enemies):
-                Fighter.add_available("mermaid")
+                Fighter.add_available(["mermaid"])
                 self.between_levels(self.stage3)
             else: self.restart_level(False)
 
