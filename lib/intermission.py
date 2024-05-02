@@ -64,8 +64,7 @@ class Intermission:
                 print(i,end=": ")
                 print(fighter)
 
-            swap_in = int(Menu.return_option(Menu.str_range(len(cls.player.fighters)))) - 1
-            print(swap_in)
+            swap_in = int(Menu.return_option(Menu.str_range(len(Fighter.available)))) - 1
 
             cls.swap_fighter(swap_out,list(Fighter.available.values())[swap_in])
 

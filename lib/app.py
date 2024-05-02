@@ -8,16 +8,11 @@ from lib.exit import Exit
 
 class App:
     def __init__(self):
-        # self.setup = Setup()
-        Setup.prep_stage0()
-        self.player = Player([Fighter.all['knight']() for _ in range(3)])
+        self.player = Setup.prep_stage0()
         Intermission.player = self.player
 
     def run(self):
         self.main_menu()
-
-        
-        Exit.exit_program()
     
     def main_menu(self):
         print('Main Menu')
@@ -25,9 +20,11 @@ class App:
         print('2. Resume Game')
         print('3. Quit')
 
-        pivot = Menu.return_option(Menu.str_range(3))
-        if pivot == "1":
-            Stage.stage1(self.player)
+        Menu.choose_option(Menu.str_range(3),[
+            lambda: Stage.stage1(self.player),
+            self.resume_game,
+            Exit.exit_program
+        ])
 
     def resume_game(self):
         pass

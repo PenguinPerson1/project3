@@ -26,7 +26,8 @@ class Stage:
             if Turn.battle_loop(player,enemies):
                 Fighter.add_available(["mermaid"])
                 Intermission.between_levels(self.stage3)
-            else: Intermission.restart_level(False)
+                restart = False
+            else: restart = Intermission.restart_level(False)
 
     @classmethod
     def stage3(self,player):
