@@ -30,8 +30,9 @@ class App:
         while restart == True:
             print("You've Started Level 1")
             if Turn.battle_loop(self.player,enemies):
+                Fighter.add_available("goblin")
                 self.between_levels(self.stage2)
-            else: restart = self.restart_level(self.stage1)
+            else: restart = self.restart_level(True)
 
     def stage2(self):
         enemies = self.setup.prep_stage2()
@@ -39,19 +40,35 @@ class App:
         while restart == True:
             print("You've Started Level 2")
             if Turn.battle_loop(self.player,enemies):
+                Fighter.add_available("mermaid")
                 self.between_levels(self.stage3)
-            else: self.restart_level(self.stage1)
+            else: self.restart_level(False)
 
     def stage3(self):
         print("stage 3")
 
-    def restart_level(self,level):
+    def restart_level(self,is_stage_1):
         print('You Died... Retry?')
-        if level == self.stage1:
+        if is_stage_1:
             print('1. Retry Level')
             print('2. Save & Quit')
 
-            if Menu.return_option(Menu.str_range(2)) == 1:
+            if Menu.return_option(Menu.str_range(2)) == "1":
+                return True
+            else:
+                self.exit_program()
+                return False
+        else: 
+            print('1. Retry Level')
+            print('2. Edit Team')
+            print('3. Save & Quit')
+
+            pivot = Menu.return_option(Menu.str_range(3))
+            print(pivot)
+            if pivot == "1":
+                return True
+            elif pivot == "2":
+                self.edit_team(None,False)
                 return True
             else:
                 self.exit_program()
@@ -71,7 +88,7 @@ class App:
             self.exit_program
             ])
         
-    def edit_team(self,next_level):
+    def edit_team(self,next_level,is_to_next = True):
         repeat = True
         while repeat:
             print("Which Fighter would you like to replace?")
@@ -83,14 +100,14 @@ class App:
             print(swap_out)
 
             print("Which fighter would you like to replace them with?")
-            for i, fighter in enumerate(Fighter.all.keys(),start=1):
+            for i, fighter in enumerate(Fighter.available.keys()):
                 print(i,end=": ")
                 print(fighter)
 
             swap_in = int(Menu.return_option(Menu.str_range(len(self.player.fighters)))) - 1
             print(swap_in)
 
-            self.swap_fighter(swap_out,list(Fighter.all.values())[swap_in])
+            self.swap_fighter(swap_out,list(Fighter.available.values())[swap_in])
 
             print('Would you like to replace a different fighter?')
             print("1. Replace Another")
@@ -99,7 +116,8 @@ class App:
                 repeat = True
             else:
                 repeat = False
-        next_level()
+        if is_to_next:
+            next_level()
 
     def swap_fighter(self,n_out,f_in):
         self.player.fighters.pop(n_out)
