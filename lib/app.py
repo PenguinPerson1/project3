@@ -1,16 +1,23 @@
 from lib.fighter import Fighter
 from lib.party import Player
 from lib.setup import Setup
-from lib.turns import Turn
 from lib.menu import Menu
+from lib.stages import Stage
+from lib.intermission import Intermission
+from lib.exit import Exit
 
 class App:
     def __init__(self):
-        self.setup = Setup()
+        # self.setup = Setup()
+        Setup.prep_stage0()
         self.player = Player([Fighter.all['knight']() for _ in range(3)])
+        Intermission.player = self.player
 
     def run(self):
         self.main_menu()
+
+        
+        Exit.exit_program()
     
     def main_menu(self):
         print('Main Menu')
@@ -18,118 +25,10 @@ class App:
         print('2. Resume Game')
         print('3. Quit')
 
-        Menu.choose_option(Menu.str_range(3),[
-            self.stage1,
-            self.resume_game,
-            self.exit_program
-            ])
-
-    def stage1(self):
-        enemies = self.setup.prep_stage1()
-        restart = True
-        while restart == True:
-            print("You've Started Level 1")
-            if Turn.battle_loop(self.player,enemies):
-                Fighter.add_available(["goblin"])
-                self.between_levels(self.stage2)
-            else: restart = self.restart_level(True)
-
-    def stage2(self):
-        enemies = self.setup.prep_stage2()
-        restart = True
-        while restart == True:
-            print("You've Started Level 2")
-            if Turn.battle_loop(self.player,enemies):
-                Fighter.add_available(["mermaid"])
-                self.between_levels(self.stage3)
-            else: self.restart_level(False)
-
-    def stage3(self):
-        print("stage 3")
-
-    def restart_level(self,is_stage_1):
-        print('You Died... Retry?')
-        if is_stage_1:
-            print('1. Retry Level')
-            print('2. Save & Quit')
-
-            if Menu.return_option(Menu.str_range(2)) == "1":
-                return True
-            else:
-                self.exit_program()
-                return False
-        else: 
-            print('1. Retry Level')
-            print('2. Edit Team')
-            print('3. Save & Quit')
-
-            pivot = Menu.return_option(Menu.str_range(3))
-            print(pivot)
-            if pivot == "1":
-                return True
-            elif pivot == "2":
-                self.edit_team(None,False)
-                return True
-            else:
-                self.exit_program()
-                return False
-
-
-    def between_levels(self,next_level):
-        print('You Won!!!')
-        print("Do you want to edit your team?")
-        print('1. Edit Team')
-        print('2. Continue to Next Round')
-        print('3. Save & Quit')
-
-        Menu.choose_option(Menu.str_range(3),[
-            lambda: self.edit_team(next_level),
-            next_level,
-            self.exit_program
-            ])
-        
-    def edit_team(self,next_level,is_to_next = True):
-        repeat = True
-        while repeat:
-            print("Which Fighter would you like to replace?")
-            for i, fighter in enumerate(self.player.fighters,start=1):
-                print(i,end=": ")
-                print(fighter.name)
-
-            swap_out = int(Menu.return_option(Menu.str_range(len(self.player.fighters)))) - 1
-            print(swap_out)
-
-            print("Which fighter would you like to replace them with?")
-            for i, fighter in enumerate(Fighter.available.keys()):
-                print(i,end=": ")
-                print(fighter)
-
-            swap_in = int(Menu.return_option(Menu.str_range(len(self.player.fighters)))) - 1
-            print(swap_in)
-
-            self.swap_fighter(swap_out,list(Fighter.available.values())[swap_in])
-
-            print('Would you like to replace a different fighter?')
-            print("1. Replace Another")
-            print("2. Continue to Next Level")
-            if Menu.return_option(Menu.str_range(2)) == "1":
-                repeat = True
-            else:
-                repeat = False
-        if is_to_next:
-            next_level()
-
-    def swap_fighter(self,n_out,f_in):
-        self.player.fighters.pop(n_out)
-        self.player.fighters.insert(n_out,f_in())
-        print(self.player.fighters[n_out].name,end=" swaps with ")
-        print(self.player.fighters[-1].name)
-        pass
+        pivot = Menu.return_option(Menu.str_range(3))
+        if pivot == "1":
+            Stage.stage1(self.player)
 
     def resume_game(self):
         pass
-
-    def exit_program(self):
-        print("goodbye!")
-        exit()
 
