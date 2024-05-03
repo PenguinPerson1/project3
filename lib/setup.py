@@ -3,6 +3,7 @@ from lib.fighter import Fighter
 from lib.actions import Attack,Magic
 from lib.party import Enemy, Player
 from lib.conditions import Condition
+from lib.stages import Stage
 
 class Setup:
     @classmethod
@@ -24,7 +25,7 @@ class Setup:
         # Knight is always available for the player to use
         Fighter.add_available(["knight"])
 
-        return Player([Fighter.all['knight']() for _ in range(1)])
+        return Player([Fighter.all['knight']() for _ in range(3)])
 
     @classmethod
     def prep_stage1(cls):
@@ -45,7 +46,7 @@ class Setup:
                                   [Attack.all['stab'],Attack.all['stab']],
                                   [Magic.all['leech_life'],Magic.all['poisoned_blade']])
 
-        return Enemy([goblin()])
+        return Stage(1,Enemy([goblin()]),["goblin"])
     
     @classmethod
     def prep_stage2(cls):
@@ -66,4 +67,11 @@ class Setup:
                                  [Attack.all['stab'],Attack.all['sea_spray']],
                                  [Magic.all['water_of_life'],Magic.all['water_of_life']])
         
-        return Enemy([mermaid()])
+        return Stage(2,Enemy([mermaid()]),["mermaid"])
+    
+    @classmethod
+    def prep_stage3(cls):
+        pass
+    
+
+    ALL = [lambda: Setup.prep_stage0(),lambda: Setup.prep_stage1(),lambda: Setup.prep_stage2(),lambda: Setup.prep_stage3()]

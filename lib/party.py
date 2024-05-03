@@ -17,6 +17,7 @@ class Party:
         
     def reset(self):
         self.alive_fighters = self.fighters.copy()
+        self.current_fighter = self.fighters[0]
         for fighter in self.fighters:
             fighter.hp = fighter.hp_max
             fighter.mp = fighter.mp_max
@@ -25,7 +26,7 @@ class Party:
 
 class Player(Party):
     def add_fighter(self,fighter):
-        if len(self.fighters) > 5:
+        if len(self.fighters) > 2:
             raise OverflowError()
         if type(fighter) != Fighter:
             raise TypeError()
@@ -49,8 +50,8 @@ class Player(Party):
     def kill_fighter(self, fighter):
         if super().kill_fighter(fighter):
             return True
-        from lib.turns import Turn
-        Turn.choose_switch(self)
+        from lib.stages import Stage
+        Stage.choose_switch()
 
 class Enemy(Party):
     def do_random_action(self,enemy):
