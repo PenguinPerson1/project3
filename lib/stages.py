@@ -20,6 +20,7 @@ class Stage:
             print(f"You've Started Level {self.stage_num}")
             if self.battle_loop():
                 Fighter.add_available(self.enemies_to_add)
+                print('You Won!!!')
                 Intermission.between_levels(self.stage_num)
                 restart = False
             else: restart = Intermission.restart_level(True)

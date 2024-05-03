@@ -36,7 +36,7 @@ class Intermission:
     @classmethod
     def between_levels(cls,num_level):
         from lib.setup import Setup
-        print('You Won!!!')
+        next_level = Setup.ALL[num_level+1]()
         print("Do you want to edit your team?")
         print('1. Edit Team')
         print('2. Continue to Next Round')
@@ -47,7 +47,7 @@ class Intermission:
             Save.save_exit(num_level,cls.player)
         else:
             if pivot == "1": cls.edit_team()
-            Setup.ALL[num_level+1]().run()
+            next_level.run()
         
     @classmethod
     def edit_team(cls):
