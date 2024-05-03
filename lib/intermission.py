@@ -34,21 +34,23 @@ class Intermission:
                 return False
 
     @classmethod
-    def between_levels(cls,next_level,num_level):
+    def between_levels(cls,num_level):
+        from lib.setup import Setup
         print('You Won!!!')
         print("Do you want to edit your team?")
         print('1. Edit Team')
         print('2. Continue to Next Round')
         print('3. Save & Quit')
 
-        Menu.choose_option(Menu.str_range(3),[
-            lambda: cls.edit_team(next_level),
-            lambda: next_level(cls.player),
-            lambda: Save.save_exit(num_level,cls.player)
-            ])
+        pivot = Menu.return_option(Menu.str_range(3),)
+        if pivot == "3":
+            Save.save_exit(num_level,cls.player)
+        else:
+            if pivot == "1": cls.edit_team()
+            Setup.ALL[num_level+1]().run()
         
     @classmethod
-    def edit_team(cls,next_level,is_to_next = True):
+    def edit_team(cls):
         repeat = True
         while repeat:
             print("Which Fighter would you like to replace?")
@@ -75,8 +77,6 @@ class Intermission:
                 repeat = True
             else:
                 repeat = False
-        if is_to_next:
-            next_level(cls.player)
 
     @classmethod
     def swap_fighter(cls,n_out,f_in):
