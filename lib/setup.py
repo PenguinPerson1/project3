@@ -24,7 +24,7 @@ class Setup:
         # Knight is always available for the player to use
         Fighter.add_available(["knight"])
 
-        return Player([Fighter.all['knight']() for _ in range(1)])
+        return Player([Fighter.all['knight']() for _ in range(3)])
 
     @classmethod
     def prep_stage1(cls):

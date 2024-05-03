@@ -25,7 +25,7 @@ class Party:
 
 class Player(Party):
     def add_fighter(self,fighter):
-        if len(self.fighters) > 5:
+        if len(self.fighters) > 2:
             raise OverflowError()
         if type(fighter) != Fighter:
             raise TypeError()
