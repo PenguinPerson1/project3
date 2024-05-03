@@ -1,5 +1,3 @@
-from lib.fighter import Fighter
-from lib.party import Player
 from lib.setup import Setup
 from lib.menu import Menu
 from lib.stages import Stage
@@ -10,9 +8,10 @@ class App:
     def __init__(self):
         self.player = Setup.prep_stage0()
         Intermission.player = self.player
+        Save.create_table()
+        Stage.player = self.player
 
     def run(self):
-        Save.create_table()
         self.main_menu()
     
     def main_menu(self):
@@ -21,11 +20,14 @@ class App:
         print('2. Resume Game')
         print('3. Quit')
 
-        Menu.choose_option(Menu.str_range(3),[
-            lambda: Stage.stage1(self.player),
-            self.resume_game,
-            Save.exit_program
-        ])
+        pivot = Menu.return_option(Menu.str_range(3))
+        if pivot == "1":
+            stage1 = Setup.prep_stage1()
+            stage1.run()
+        elif pivot == "2":
+            self.resume_game()
+        elif pivot == "3":
+            Save.exit_program()
 
     def resume_game(self):
         pass

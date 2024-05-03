@@ -50,8 +50,8 @@ class Player(Party):
     def kill_fighter(self, fighter):
         if super().kill_fighter(fighter):
             return True
-        from lib.turns import Turn
-        Turn.choose_switch(self)
+        from lib.stages import Stage
+        Stage.choose_switch()
 
 class Enemy(Party):
     def do_random_action(self,enemy):
