@@ -30,5 +30,15 @@ class App:
             Save.exit_program()
 
     def resume_game(self):
-        pass
+        saves = Save.read_all()
+        print("Choose A Save to Resume:")
+        for i, save in enumerate(saves, start= 1):
+            print(f"{i}) After Stage {save[1]} with party {', '.join(save[2:5])}")
+        pivot = Menu.return_option(Menu.str_range(len(saves)))
+        print(saves[int(pivot)-1])
+
+        stage = None
+        for setup in Setup.ALL[0:int(pivot)]:
+            stage = setup()
+        stage.run()
 

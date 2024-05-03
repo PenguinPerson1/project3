@@ -32,3 +32,13 @@ class Save:
     def save_exit(cls,stage,party):
         cls.save_program(stage, party)
         cls.exit_program()
+
+    @classmethod
+    def read_all(cls):
+        sql = """
+        SELECT * FROM saves;
+        """
+
+        saves = CURSOR.execute(sql).fetchall()
+        print(saves)
+        return saves
