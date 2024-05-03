@@ -13,7 +13,7 @@ class Stage:
             print("You've Started Level 1")
             if Turn.battle_loop(player,enemies):
                 Fighter.add_available(["goblin"])
-                Intermission.between_levels(self.stage2)
+                Intermission.between_levels(self.stage2,1)
                 restart = False
             else: restart = Intermission.restart_level(True)
 
@@ -25,10 +25,13 @@ class Stage:
             print("You've Started Level 2")
             if Turn.battle_loop(player,enemies):
                 Fighter.add_available(["mermaid"])
-                Intermission.between_levels(self.stage3)
+                Intermission.between_levels(self.stage3,2)
                 restart = False
             else: restart = Intermission.restart_level(False)
 
     @classmethod
     def stage3(self,player):
         print("stage 3")
+
+
+    stages = [stage1,stage2,stage3]

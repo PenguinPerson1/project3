@@ -12,9 +12,9 @@ class Save:
         CREATE TABLE IF NOT EXISTS saves (
             id INTEGER PRIMARY KEY,
             stage INTEGER,
+            fighter0 TEXT,
             fighter1 TEXT,
-            fighter2 TEXT,
-            fighter3 TEXT
+            fighter2 TEXT
         );
         """
         CURSOR.execute(sql)
@@ -23,4 +23,12 @@ class Save:
 
     @classmethod
     def save_program(cls,stage,party):
-        pass
+        sql = "INSERT INTO saves (stage,fighter0,fighter1,fighter2) VALUES ( ? , ? , ? , ? );"
+
+        CURSOR.execute(sql, [stage] + [fighter.name for fighter in party.fighters] + [None for _ in range(3-len(party.fighters))])
+        CONN.commit()
+
+    @classmethod
+    def save_exit(cls,stage,party):
+        cls.save_program(stage, party)
+        cls.exit_program()

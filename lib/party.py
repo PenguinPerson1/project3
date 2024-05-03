@@ -17,6 +17,7 @@ class Party:
         
     def reset(self):
         self.alive_fighters = self.fighters.copy()
+        self.current_fighter = self.fighters[0]
         for fighter in self.fighters:
             fighter.hp = fighter.hp_max
             fighter.mp = fighter.mp_max

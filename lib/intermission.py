@@ -34,7 +34,7 @@ class Intermission:
                 return False
 
     @classmethod
-    def between_levels(cls,next_level):
+    def between_levels(cls,next_level,num_level):
         print('You Won!!!')
         print("Do you want to edit your team?")
         print('1. Edit Team')
@@ -44,7 +44,7 @@ class Intermission:
         Menu.choose_option(Menu.str_range(3),[
             lambda: cls.edit_team(next_level),
             lambda: next_level(cls.player),
-            Save.exit_program
+            lambda: Save.save_exit(num_level,cls.player)
             ])
         
     @classmethod

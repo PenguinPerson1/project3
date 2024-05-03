@@ -12,6 +12,7 @@ class App:
         Intermission.player = self.player
 
     def run(self):
+        Save.create_table()
         self.main_menu()
     
     def main_menu(self):
