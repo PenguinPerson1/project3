@@ -4,7 +4,7 @@ from lib.setup import Setup
 from lib.menu import Menu
 from lib.stages import Stage
 from lib.intermission import Intermission
-from lib.exit import Exit
+from lib.saves import Save
 
 class App:
     def __init__(self):
@@ -23,7 +23,7 @@ class App:
         Menu.choose_option(Menu.str_range(3),[
             lambda: Stage.stage1(self.player),
             self.resume_game,
-            Exit.exit_program
+            Save.exit_program
         ])
 
     def resume_game(self):

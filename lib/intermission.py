@@ -1,6 +1,6 @@
 from lib.menu import Menu
 from lib.fighter import Fighter
-from lib.exit import Exit
+from lib.saves import Save
 
 
 class Intermission:
@@ -15,7 +15,7 @@ class Intermission:
             if Menu.return_option(Menu.str_range(2)) == "1":
                 return True
             else:
-                Exit.exit_program()
+                Save.exit_program()
                 return False
         else: 
             print('1. Retry Level')
@@ -30,7 +30,7 @@ class Intermission:
                 cls.edit_team(None,False)
                 return True
             else:
-                Exit.exit_program()
+                Save.exit_program()
                 return False
 
     @classmethod
@@ -44,7 +44,7 @@ class Intermission:
         Menu.choose_option(Menu.str_range(3),[
             lambda: cls.edit_team(next_level),
             lambda: next_level(cls.player),
-            Exit.exit_program
+            Save.exit_program
             ])
         
     @classmethod

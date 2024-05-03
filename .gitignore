@@ -1,5 +1,7 @@
 .venv
 
+main.db
+
 *__pycache__*
 
 .notes
