@@ -40,8 +40,10 @@ class App:
         pivot = Menu.return_option(Menu.str_range(len(saves)))
 
         stage = None
-        for setup in Setup.ALL[0:int(pivot)]:
+        print(saves[int(pivot)-1][1])
+        for setup in Setup.ALL[0:saves[int(pivot)-1][1]+2]:
             stage = setup()
+        print(stage)
         stage.run()
 
     def choose_delete(self):
