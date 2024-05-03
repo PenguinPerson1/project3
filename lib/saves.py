@@ -42,3 +42,12 @@ class Save:
         saves = CURSOR.execute(sql).fetchall()
         print(saves)
         return saves
+    
+    @classmethod
+    def delete_save(cls,save):
+        sql = """
+        DELETE FROM saves WHERE id = ?;
+        """
+
+        CURSOR.execute(sql, [save[0]])
+        CONN.commit()
