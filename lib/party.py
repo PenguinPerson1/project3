@@ -51,7 +51,7 @@ class Player(Party):
         if super().kill_fighter(fighter):
             return True
         from lib.stages import Stage
-        Stage.choose_switch()
+        Stage.choose_switch(False)
 
 class Enemy(Party):
     def do_random_action(self,enemy):
