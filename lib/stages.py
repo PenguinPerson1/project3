@@ -49,7 +49,10 @@ class Stage:
         # Player acts
         print('Your Turn')
 
-        Menu.choose_option(["1. Attack","2. Magic","3. Switch"],Menu.add_num_strings(["attack","magic","switch"]),[
+        Menu.choose_option(
+            ["1. Attack","2. Magic","3. Switch"],
+            Menu.add_nums(["attack","magic","switch"]),
+            [
             self.choose_attack,
             self.choose_magic,
             self.choose_switch
@@ -84,14 +87,16 @@ class Stage:
 
     @classmethod
     def choose_switch(cls,if_back = True):
-        num_players = len(cls.player.alive_fighters)
-        swap_li = []
-        text_li = []
         def create_swap(i):
             return lambda: cls.player.swap_current_fighter(i)
-        for i in range(num_players):
-            text_li.append(f"{i+1}. {cls.player.alive_fighters[i]}")
-            swap_li.append(create_swap(i))
-        if if_back: text_li.append(f"{i+2}: Back")
-        return Menu.choose_option(text_li, Menu.str_range(num_players+1) if if_back else Menu.str_range(num_players), swap_li,if_back)
+
+        swap_li = [create_swap(i) for i in range(len(cls.player.alive_fighters))]
+        options_li = [fighter.name for fighter in cls.player.alive_fighters]
+        text_li = [f"{i+1}. {fighter}" for i,fighter in enumerate(cls.player.alive_fighters)]
+
+        if if_back: 
+            text_li.append(f"{len(cls.player.alive_fighters)+1}: Back")
+            options_li.append("back")
+
+        return Menu.choose_option(text_li, Menu.add_nums(options_li), swap_li,if_back)
         
