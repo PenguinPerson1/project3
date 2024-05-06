@@ -71,7 +71,12 @@ class Stage:
         return Menu.choose_option([
             f"1. {Stage.player.current_fighter.attacks[0]}",
             f"2. {Stage.player.current_fighter.attacks[1]}",
-            "3. Back"],Menu.str_range(3),[
+            "3. Back"],
+            Menu.add_nums([
+                Stage.player.current_fighter.attacks[0].name,
+                Stage.player.current_fighter.attacks[1].name,
+                "back"]),
+            [
             lambda: Stage.player.current_fighter_attack(0,self.enemies.current_fighter),
             lambda: Stage.player.current_fighter_attack(1,self.enemies.current_fighter)
             ],True)
@@ -80,7 +85,12 @@ class Stage:
         return Menu.choose_option([
             f"1. {Stage.player.current_fighter.magics[0]}",
             f"2. {Stage.player.current_fighter.magics[1]}",
-            "3. Back"],Menu.str_range(3),[
+            "3. Back"],
+            Menu.add_nums([
+                Stage.player.current_fighter.magics[0].name,
+                Stage.player.current_fighter.magics[1].name,
+                "back"]),
+            [
             lambda: Stage.player.current_fighter_magic(0,self.enemies.current_fighter),
             lambda: Stage.player.current_fighter_magic(1,self.enemies.current_fighter)
             ],True)
