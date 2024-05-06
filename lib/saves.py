@@ -82,6 +82,6 @@ class Save:
             options[-1].append("back")
             pivot = Menu.return_option(options)
 
-            if pivot != str(len(saves)+1) and pivot != "back":
-                return saves[int(pivot)-1]
+            if pivot != len(saves):
+                return saves[pivot]
         return Menu.BACK

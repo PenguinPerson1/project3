@@ -18,16 +18,21 @@ class Menu:
             for text in display:
                 print(text)
 
-            user_input = cls.return_option(options)
-            if include_back and user_input == options.pop():
+            option_num = cls.return_option(options)
+            if include_back and option_num == len(options)-1:
                 return cls.BACK
+
+            res = results[option_num]()
+            if res == cls.BACK:
+                repeat = True
+
                 
-            for i in range(len(options)):
-                if user_input.lower() in options[i]:
-                    res = results[i]()
-                    if res == cls.BACK:
-                        repeat = True
-                    break
+            # for i in range(len(options)):
+            #     if user_input.lower() in options[i]:
+            #         res = results[i]()
+            #         if res == cls.BACK:
+            #             repeat = True
+            #         break
 
 
     @classmethod
@@ -40,4 +45,6 @@ class Menu:
             print("Invalid option please enter a number listed")
             user_input = input(">>> ")
 
-        return user_input.lower()
+        for i in range(len(options)):
+            if user_input.lower() in options[i]:
+                return i

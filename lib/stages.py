@@ -75,7 +75,7 @@ class Stage:
             Menu.add_nums([
                 [Stage.player.current_fighter.attacks[0].name],
                 [Stage.player.current_fighter.attacks[1].name],
-                "back"]),
+                ["back"]]),
             [
             lambda: Stage.player.current_fighter_attack(0,self.enemies.current_fighter),
             lambda: Stage.player.current_fighter_attack(1,self.enemies.current_fighter)
@@ -89,7 +89,7 @@ class Stage:
             Menu.add_nums([
                 [Stage.player.current_fighter.magics[0].name],
                 [Stage.player.current_fighter.magics[1].name],
-                "back"]),
+                ["back"]]),
             [
             lambda: Stage.player.current_fighter_magic(0,self.enemies.current_fighter),
             lambda: Stage.player.current_fighter_magic(1,self.enemies.current_fighter)
@@ -106,7 +106,7 @@ class Stage:
 
         if if_back: 
             text_li.append(f"{len(cls.player.alive_fighters)+1}: Back")
-            options_li.append("back")
+            options_li.append(["back"])
 
         return Menu.choose_option(text_li, Menu.add_nums(options_li), swap_li,if_back)
         
