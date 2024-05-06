@@ -51,7 +51,7 @@ class Stage:
 
         Menu.choose_option(
             ["1. Attack","2. Magic","3. Switch"],
-            Menu.add_nums(["attack","magic","switch"]),
+            Menu.add_nums([["attack"],["magic"],["switch"]]),
             [
             self.choose_attack,
             self.choose_magic,
@@ -73,8 +73,8 @@ class Stage:
             f"2. {Stage.player.current_fighter.attacks[1]}",
             "3. Back"],
             Menu.add_nums([
-                Stage.player.current_fighter.attacks[0].name,
-                Stage.player.current_fighter.attacks[1].name,
+                [Stage.player.current_fighter.attacks[0].name],
+                [Stage.player.current_fighter.attacks[1].name],
                 "back"]),
             [
             lambda: Stage.player.current_fighter_attack(0,self.enemies.current_fighter),
@@ -87,8 +87,8 @@ class Stage:
             f"2. {Stage.player.current_fighter.magics[1]}",
             "3. Back"],
             Menu.add_nums([
-                Stage.player.current_fighter.magics[0].name,
-                Stage.player.current_fighter.magics[1].name,
+                [Stage.player.current_fighter.magics[0].name],
+                [Stage.player.current_fighter.magics[1].name],
                 "back"]),
             [
             lambda: Stage.player.current_fighter_magic(0,self.enemies.current_fighter),
@@ -101,7 +101,7 @@ class Stage:
             return lambda: cls.player.swap_current_fighter(i)
 
         swap_li = [create_swap(i) for i in range(len(cls.player.alive_fighters))]
-        options_li = [fighter.name for fighter in cls.player.alive_fighters]
+        options_li = [[fighter.name] for fighter in cls.player.alive_fighters]
         text_li = [f"{i+1}. {fighter}" for i,fighter in enumerate(cls.player.alive_fighters)]
 
         if if_back: 

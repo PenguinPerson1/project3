@@ -17,7 +17,7 @@ class App:
     def main_menu(self):
         Menu.choose_option(
             ["1. New Game","2. Resume Game",
-            "3. Delete a Save","4. Quit"],Menu.str_range(4),[
+            "3. Delete Save","4. Quit"],Menu.add_nums([["new","new game"],["resume","resume game"],["delete","delete save"],["quit"]]),[
             lambda: Setup.prep_stage1().run(),
             self.resume_game,
             self.choose_delete,

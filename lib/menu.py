@@ -2,7 +2,7 @@ class Menu:
     BACK = "BACK"
     @classmethod
     def add_nums(cls,li:list):
-        return [(str(i+1), item) for i, item in enumerate(li)]
+        return [(str(i+1), *item) for i, item in enumerate(li)]
 
     @classmethod
     def str_range(cls,max):
