@@ -49,7 +49,7 @@ class Stage:
         # Player acts
         print('Your Turn')
 
-        Menu.choose_option(["1. Attack","2. Magic","3. Switch"],Menu.str_range(3),[
+        Menu.choose_option(["1. Attack","2. Magic","3. Switch"],Menu.add_num_strings(["attack","magic","switch"]),[
             self.choose_attack,
             self.choose_magic,
             self.choose_switch
