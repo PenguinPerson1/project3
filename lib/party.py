@@ -1,12 +1,14 @@
 from lib.fighter import Fighter
 import random
 class Party:
+    all = []
     def __init__(self,fighters=[]):
         self.fighters = fighters.copy()
         self.current_fighter = self.fighters[0]
         self.alive_fighters = self.fighters.copy()
         for fighter in self.alive_fighters:
             fighter.on_death = lambda f: self.kill_fighter(f)
+        Party.all.append(self)
     
     def kill_fighter(self,fighter):
         self.alive_fighters.remove(fighter)

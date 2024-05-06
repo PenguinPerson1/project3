@@ -25,39 +25,24 @@ class App:
         ])
 
     def resume_game(self):
-        saves = Save.read_all()
-        print("Choose a Save to Resume:")
-        for i, save in enumerate(saves, start= 1):
-            print(f"{i}. After Stage {save[1]} with party {', '.join(save[2:5])}")
-        print(f"{len(saves)+1}. Back")
-        pivot = Menu.return_option(Menu.str_range(len(saves)+1))
-
-        if pivot == str(len(saves)+1):
+        save = Save.get_save("Resume")
+        if save == Menu.BACK:
             return Menu.BACK
+        else:
+            Save.set_id(save)
 
-        Save.set_id(saves[int(pivot)-1])
-
-        stage = None
-        for setup in Setup.ALL[0:saves[int(pivot)-1][1]+1]:
-            stage = setup()
+            stage = None
+            for setup in Setup.ALL[0:save[1]+1]:
+                stage = setup()
+                
+            self.player = Player([Fighter.all[fighter]() for fighter in save[2:5]])
             
-        self.player = Player([Fighter.all[fighter]() for fighter in saves[int(pivot)-1][2:5]])
-        
-        Intermission.between_levels(stage.stage_num)
+            Intermission.between_levels(stage.stage_num)
 
     def choose_delete(self):
-        saves = Save.read_all()
-        print("Choose a Save to Delete:")
-
-        for i, save in enumerate(saves, start= 1):
-            print(f"{i}. After Stage {save[1]} with party {', '.join(save[2:5])}")
-        print(f"{len(saves)+1}. Back")
-        pivot = Menu.return_option(Menu.str_range(len(saves)+1))
-
-        if pivot == str(len(saves)+1):
-            return Menu.BACK
-
-        Save.delete_save(saves[int(pivot)-1])
+        value = Save.get_save("delete")
+        if value != Menu.BACK:
+            Save.delete_save(value)
         return Menu.BACK
 
     @property

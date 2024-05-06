@@ -19,9 +19,11 @@ class Fighter:
         self.on_death = lambda: None
 
     def __repr__(self):
+        from lib.party import Party
         base = f"A {self.name} with {self.hp} hp and {self.mp} mp left."
         condition = f" They are {self.condition['condition'].description}" if self.condition != None else ""
-        return base + condition
+        current = " (Current)" if self in [party.current_fighter for party in Party.all ] else ""
+        return base + condition + current
 
     def take_damage(self,damage_type,damage):
         if damage_type.name in self.type.is_weak_to:
