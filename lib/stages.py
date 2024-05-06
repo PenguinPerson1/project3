@@ -48,11 +48,8 @@ class Stage:
             print(fighter)
         # Player acts
         print('Your Turn')
-        print('1. Attack')
-        print('2. Magic')
-        print('3. Switch')
 
-        Menu.choose_option(Menu.str_range(3),[
+        Menu.choose_option(["1. Attack","2. Magic","3. Switch"],Menu.str_range(3),[
             self.choose_attack,
             self.choose_magic,
             self.choose_switch
@@ -68,35 +65,33 @@ class Stage:
                 fighter.condition['condition'].onTrigger(fighter,fighter.condition['amount'])
     
     def choose_attack(self):
-        print("1.",end=' ')
-        print(Stage.player.current_fighter.attacks[0])
-        print("2.",end=' ')
-        print(Stage.player.current_fighter.attacks[1])
-        Menu.choose_option(Menu.str_range(2),[
+        return Menu.choose_option([
+            f"1. {Stage.player.current_fighter.attacks[0]}",
+            f"2. {Stage.player.current_fighter.attacks[1]}",
+            "3. Back"],Menu.str_range(3),[
             lambda: Stage.player.current_fighter_attack(0,self.enemies.current_fighter),
             lambda: Stage.player.current_fighter_attack(1,self.enemies.current_fighter)
-            ])
+            ],True)
     
     def choose_magic(self):
-        print("1.",end=' ')
-        print(Stage.player.current_fighter.magics[0])
-        print("2.",end=' ')
-        print(Stage.player.current_fighter.magics[1])
-        Menu.choose_option(Menu.str_range(2),[
+        return Menu.choose_option([
+            f"1. {Stage.player.current_fighter.magics[0]}",
+            f"2. {Stage.player.current_fighter.magics[1]}",
+            "3. Back"],Menu.str_range(3),[
             lambda: Stage.player.current_fighter_magic(0,self.enemies.current_fighter),
             lambda: Stage.player.current_fighter_magic(1,self.enemies.current_fighter)
-            ])
+            ],True)
 
     @classmethod
     def choose_switch(cls):
         num_players = len(cls.player.alive_fighters)
-        li = []
+        swap_li = []
+        text_li = []
         def create_swap(i):
             return lambda: cls.player.swap_current_fighter(i)
         for i in range(num_players):
-            print(i+1,end=": ")
-            print(cls.player.alive_fighters[i])
-            li.append(create_swap(i))
-        
-        Menu.choose_option(Menu.str_range(num_players), li)
+            text_li.append(f"{i+1}. {cls.player.alive_fighters[i]}")
+            swap_li.append(create_swap(i))
+        text_li.append(f"{i+2}: Back")
+        return Menu.choose_option(text_li, Menu.str_range(num_players+1), swap_li,True)
         
