@@ -3,12 +3,14 @@ from lib.menu import Menu
 from lib.stages import Stage
 from lib.intermission import Intermission
 from lib.saves import Save
+from lib.fighter import Fighter
+from lib.party import Player
 
 class App:
     def __init__(self):
+        Save.create_table()
         self.player = Setup.prep_stage0()
         Intermission.player = self.player
-        Save.create_table()
         Stage.player = self.player
 
     def run(self):
@@ -42,6 +44,11 @@ class App:
         stage = None
         for setup in Setup.ALL[0:saves[int(pivot)-1][1]+1]:
             stage = setup()
+            
+        self.player = Player([Fighter.all[fighter]() for fighter in saves[int(pivot)-1][2:5]])
+        Stage.player = self.player
+        Intermission.player = self.player
+        
         Intermission.between_levels(stage.stage_num)
 
     def choose_delete(self):
