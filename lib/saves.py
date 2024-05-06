@@ -78,8 +78,10 @@ class Save:
             for i, save in enumerate(saves, start= 1):
                 print(f"{i}. After Stage {save[1]} with party {', '.join(save[2:5])}")
             print(f"{len(saves)+1}. Back")
-            pivot = Menu.return_option(Menu.str_range(len(saves)+1))
+            options = Menu.str_range(len(saves)+1)
+            options[-1].append("back")
+            pivot = Menu.return_option(options)
 
-            if pivot != str(len(saves)+1):
+            if pivot != str(len(saves)+1) and pivot != "back":
                 return saves[int(pivot)-1]
         return Menu.BACK

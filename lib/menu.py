@@ -18,7 +18,6 @@ class Menu:
             for text in display:
                 print(text)
 
-            print(options)
             user_input = cls.return_option(options)
             if include_back and user_input == options.pop():
                 return cls.BACK
@@ -35,9 +34,10 @@ class Menu:
     def return_option(cls,options:list):
         user_input = ''
         # options is a list of any string you will accept
+        print(options)
         user_input = input(">>> ")
         while not any(user_input.lower() in sl for sl in options):
             print("Invalid option please enter a number listed")
             user_input = input(">>> ")
 
-        return user_input
+        return user_input.lower()
