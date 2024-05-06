@@ -87,8 +87,7 @@ class Intermission:
 
     @classmethod
     def swap_fighter(cls,n_out,f_in):
-        cls.player.fighters.pop(n_out)
+        f_out = cls.player.fighters.pop(n_out)
         cls.player.fighters.insert(n_out,f_in())
-        print(cls.player.fighters[n_out].name,end=" swaps with ")
-        print(cls.player.fighters[-1].name)
-        pass
+        print(f_out.name,end=" swaps with ")
+        print(cls.player.fighters[n_out].name)
