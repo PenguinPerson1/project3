@@ -10,8 +10,6 @@ class App:
     def __init__(self):
         Save.create_table()
         self.player = Setup.prep_stage0()
-        Intermission.player = self.player
-        Stage.player = self.player
 
     def run(self):
         self.main_menu()
@@ -46,8 +44,6 @@ class App:
             stage = setup()
             
         self.player = Player([Fighter.all[fighter]() for fighter in saves[int(pivot)-1][2:5]])
-        Stage.player = self.player
-        Intermission.player = self.player
         
         Intermission.between_levels(stage.stage_num)
 
@@ -61,3 +57,11 @@ class App:
 
         Save.delete_save(saves[int(pivot)-1])
 
+    @property
+    def player(self):
+        return self._player
+    @player.setter
+    def player(self,value):
+        self._player = value
+        Intermission.player = value
+        Stage.player = value
