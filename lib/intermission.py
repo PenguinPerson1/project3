@@ -73,10 +73,13 @@ class Intermission:
             print('Would you like to replace a different fighter?')
             print("1. Replace Another")
             print("2. Continue to Next Level")
-            if Menu.return_option(Menu.str_range(2)) == "1":
-                repeat = True
+            print("3. Save and Quit")
+
+            pivot = Menu.return_option(Menu.str_range(2)) == "1"
+            if pivot == "3":
+                Save.save_exit(num_level,cls.player)
             else:
-                repeat = False
+                repeat = pivot == "1"
 
     @classmethod
     def swap_fighter(cls,n_out,f_in):
