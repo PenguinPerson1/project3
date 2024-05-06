@@ -6,11 +6,12 @@ from lib.saves import Save
 class Intermission:
 
     @classmethod
-    def restart_level(cls,is_stage_1):
+    def restart_level(cls,num_level):
         print('You Died... Retry?')
-        if is_stage_1:
+        cls.num_level = num_level-1
+        if num_level == 1:
             print('1. Retry Level')
-            print('2. Save & Quit')
+            print('2. Quit')
 
             if Menu.return_option(Menu.str_range(2)) == "1":
                 return True
@@ -27,14 +28,15 @@ class Intermission:
             if pivot == "1":
                 return True
             elif pivot == "2":
-                cls.edit_team(None,False)
+                cls.edit_team()
                 return True
             else:
-                Save.exit_program()
+                Save.save_exit(cls.num_level,cls.player)
                 return False
 
     @classmethod
     def between_levels(cls,num_level):
+        cls.num_level = num_level
         from lib.setup import Setup
         next_level = Setup.ALL[num_level+1]()
         print("Do you want to edit your team?")
@@ -44,7 +46,7 @@ class Intermission:
 
         pivot = Menu.return_option(Menu.str_range(3),)
         if pivot == "3":
-            Save.save_exit(num_level,cls.player)
+            Save.save_exit(cls.num_level,cls.player)
         else:
             if pivot == "1": cls.edit_team()
             next_level.run()
@@ -75,11 +77,13 @@ class Intermission:
             print("2. Continue to Next Level")
             print("3. Save and Quit")
 
-            pivot = Menu.return_option(Menu.str_range(2)) == "1"
-            if pivot == "3":
-                Save.save_exit(num_level,cls.player)
-            else:
-                repeat = pivot == "1"
+            pivot = Menu.return_option(Menu.str_range(3))
+            if pivot == "1":
+                repeat = True
+            elif pivot == "2":
+                repeat = False
+            elif pivot == "3":
+                Save.save_exit(cls.num_level,cls.player)
 
     @classmethod
     def swap_fighter(cls,n_out,f_in):

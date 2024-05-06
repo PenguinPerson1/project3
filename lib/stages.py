@@ -23,7 +23,7 @@ class Stage:
                 print('You Won!!!')
                 Intermission.between_levels(self.stage_num)
                 restart = False
-            else: restart = Intermission.restart_level(True)
+            else: restart = Intermission.restart_level(self.stage_num)
 
     def battle_loop(self):
         self.enemies.reset()
@@ -83,7 +83,7 @@ class Stage:
             ],True)
 
     @classmethod
-    def choose_switch(cls):
+    def choose_switch(cls,if_back = True):
         num_players = len(cls.player.alive_fighters)
         swap_li = []
         text_li = []
@@ -92,6 +92,6 @@ class Stage:
         for i in range(num_players):
             text_li.append(f"{i+1}. {cls.player.alive_fighters[i]}")
             swap_li.append(create_swap(i))
-        text_li.append(f"{i+2}: Back")
-        return Menu.choose_option(text_li, Menu.str_range(num_players+1), swap_li,True)
+        if if_back: text_li.append(f"{i+2}: Back")
+        return Menu.choose_option(text_li, Menu.str_range(num_players+1) if if_back else Menu.str_range(num_players), swap_li,if_back)
         
