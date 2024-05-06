@@ -35,6 +35,8 @@ class App:
         if pivot == str(len(saves)+1):
             return Menu.BACK
 
+        Save.set_id(saves[int(pivot)-1])
+
         stage = None
         for setup in Setup.ALL[0:saves[int(pivot)-1][1]+1]:
             stage = setup()
@@ -56,6 +58,7 @@ class App:
             return Menu.BACK
 
         Save.delete_save(saves[int(pivot)-1])
+        return Menu.BACK
 
     @property
     def player(self):
