@@ -1,4 +1,5 @@
 class Menu:
+    BACK = "BACK"
     @classmethod
     def str_range(cls,max):
         return [str(i+1) for i in range(max)]
@@ -15,12 +16,12 @@ class Menu:
 
             user_input = cls.return_option(options)
             if include_back and user_input == options.pop():
-                return "BACK"
+                return cls.BACK
             
             for i in range(len(options)):
                 if user_input == options[i]:
                     res = results[i]()
-                    if res == "BACK":
+                    if res == cls.BACK:
                         repeat = True
 
 
