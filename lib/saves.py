@@ -65,3 +65,21 @@ class Save:
 
         CURSOR.execute(sql, [save[0]])
         CONN.commit()
+
+    @classmethod
+    def get_save(cls,method:str):
+        saves = cls.read_all()
+        if saves == []:
+            print("No Saves currently exist")
+            print("Returning you to Main Menu")
+
+        else:
+            print(f"Choose a Save to {method}:")
+            for i, save in enumerate(saves, start= 1):
+                print(f"{i}. After Stage {save[1]} with party {', '.join(save[2:5])}")
+            print(f"{len(saves)+1}. Back")
+            pivot = Menu.return_option(Menu.str_range(len(saves)+1))
+
+            if pivot != str(len(saves)+1):
+                return saves[int(pivot)-1]
+        return Menu.BACK
