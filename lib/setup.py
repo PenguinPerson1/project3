@@ -4,6 +4,7 @@ from lib.actions import Attack,Magic
 from lib.party import Enemy, Player
 from lib.conditions import Condition
 from lib.stages import Stage
+import lib.config as config
 
 class Setup:
     @classmethod
@@ -14,6 +15,7 @@ class Setup:
         Magic.all.clear()
         Fighter.all.clear()
         Fighter.available.clear()
+        config.player = Setup.prep_stage0()
     @classmethod
     def prep_stage0(cls):
         Type("normal",[],[])

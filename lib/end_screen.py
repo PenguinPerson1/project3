@@ -1,6 +1,5 @@
 from lib.menu import Menu
-import lib.config as config
-
+from lib.saves import Save
 
 class End_screen:
     @classmethod
@@ -8,6 +7,7 @@ class End_screen:
         from lib.setup import Setup
         Setup.reset_game()
         print("Congratulations on Finishing the Game")
+        print("1. Play Again")
         print("2. Main Menu")
         print("3. Quit")
         pivot  = Menu.return_option(Menu.add_nums([
@@ -16,7 +16,6 @@ class End_screen:
             ["q","quit"]
         ]))
         if pivot == 0:
-            config.player = Setup.prep_stage0()
             Setup.prep_stage1().run()
         elif pivot == 1:
             return Menu.BACK

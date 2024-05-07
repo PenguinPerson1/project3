@@ -30,7 +30,7 @@ class App:
             self.resume_game,
             self.choose_delete,
             Save.exit_program
-        ],True)
+        ])
 
     def resume_game(self):
         save = Save.get_save("Resume")
@@ -45,7 +45,7 @@ class App:
                 
             config.player = Player([Fighter.all[fighter]() for fighter in save[2:5]])
             
-            Intermission.between_levels(stage.stage_num)
+            return Intermission.between_levels(stage.stage_num)
 
     def choose_delete(self):
         value = Save.get_save("delete")
