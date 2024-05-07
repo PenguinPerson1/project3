@@ -1,6 +1,7 @@
 from lib.menu import Menu
 from lib.fighter import Fighter
 from lib.saves import Save
+import lib.config as config
 
 
 class Intermission:
@@ -41,7 +42,7 @@ class Intermission:
                 cls.edit_team()
                 return True
             elif pivot == 2:
-                Save.save_exit(cls.num_level,cls.player)
+                Save.save_exit(cls.num_level,config.player)
                 return False
 
     @classmethod
@@ -60,22 +61,22 @@ class Intermission:
             cls.SAVE_OPTIONS
         ]),)
         if pivot == 2:
-            Save.save_exit(cls.num_level,cls.player)
+            Save.save_exit(cls.num_level,config.player)
         else:
             if pivot == 0: 
                 cls.edit_team()
-            next_level.run()
+            return next_level.run()
         
     @classmethod
     def edit_team(cls):
         repeat = True
         while repeat:
             print("Which Fighter would you like to replace?")
-            for i, fighter in enumerate(cls.player.fighters,start=1):
+            for i, fighter in enumerate(config.player.fighters,start=1):
                 print(i,end=": ")
                 print(fighter.name)
 
-            swap_out = Menu.return_option(Menu.add_nums([[fighter.name,fighter.name[0]] for fighter in cls.player.fighters]))
+            swap_out = Menu.return_option(Menu.add_nums([[fighter.name,fighter.name[0]] for fighter in config.player.fighters]))
             print(swap_out)
 
             print("Which fighter would you like to replace them with?")
@@ -102,11 +103,11 @@ class Intermission:
             elif pivot == 1:
                 repeat = False
             elif pivot == 2:
-                Save.save_exit(cls.num_level,cls.player)
+                Save.save_exit(cls.num_level,config.player)
 
     @classmethod
     def swap_fighter(cls,n_out,f_in):
-        f_out = cls.player.fighters.pop(n_out)
-        cls.player.fighters.insert(n_out,f_in())
+        f_out = config.player.fighters.pop(n_out)
+        config.player.fighters.insert(n_out,f_in())
         print(f_out.name,end=" swaps with ")
-        print(cls.player.fighters[n_out].name)
+        print(config.player.fighters[n_out].name)
