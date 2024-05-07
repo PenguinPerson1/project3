@@ -35,6 +35,7 @@ class Menu:
         while not any(user_input.lower() in sl for sl in options):
             print("Invalid option please enter a number listed")
             user_input = input(">>> ")
+        print('')
 
         for i in range(len(options)):
             if user_input.lower() in options[i]:

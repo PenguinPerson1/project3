@@ -1,4 +1,5 @@
 from lib.fighter import Fighter
+from lib.menu import Menu
 import random
 class Party:
     all = []
@@ -44,9 +45,14 @@ class Player(Party):
         print("changed fighter")
     
     def current_fighter_attack(self,atk_num:int,enemy):
-        self.current_fighter.attacks[atk_num].use(enemy)
+        print("-----------------------\n")
+        self.current_fighter.attacks[atk_num].use(enemy,self.current_fighter)
 
     def current_fighter_magic(self,atk_num:int,enemy):
+        if self.current_fighter.magics[atk_num].mp_use > self.current_fighter.mp:
+            print("Not Enough Mana\n")
+            return Menu.BACK
+        print("-----------------------\n")
         self.current_fighter.magics[atk_num].use(enemy,self.current_fighter)
 
     def kill_fighter(self, fighter):
