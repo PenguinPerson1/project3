@@ -7,6 +7,14 @@ from lib.stages import Stage
 
 class Setup:
     @classmethod
+    def reset_game(cls):
+        Type.all.clear()
+        Condition.all.clear()
+        Attack.all.clear()
+        Magic.all.clear()
+        Fighter.all.clear()
+        Fighter.available.clear()
+    @classmethod
     def prep_stage0(cls):
         Type("normal",[],[])
         Type("fire",["water"],["grass"])
@@ -74,4 +82,8 @@ class Setup:
         pass
     
 
-    ALL = [lambda: Setup.prep_stage0(),lambda: Setup.prep_stage1(),lambda: Setup.prep_stage2(),lambda: Setup.prep_stage3()]
+    ALL = [
+        lambda: Setup.prep_stage0(),
+        lambda: Setup.prep_stage1(),
+        lambda: Setup.prep_stage2(),
+    ]

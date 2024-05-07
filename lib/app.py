@@ -5,11 +5,12 @@ from lib.intermission import Intermission
 from lib.saves import Save
 from lib.fighter import Fighter
 from lib.party import Player
+import lib.config as config
 
 class App:
     def __init__(self):
         Save.create_table()
-        self.player = Setup.prep_stage0()
+        config.player = Setup.prep_stage0()
 
     def run(self):
         self.main_menu()
@@ -29,7 +30,7 @@ class App:
             self.resume_game,
             self.choose_delete,
             Save.exit_program
-        ])
+        ],True)
 
     def resume_game(self):
         save = Save.get_save("Resume")
@@ -42,7 +43,7 @@ class App:
             for setup in Setup.ALL[0:save[1]+1]:
                 stage = setup()
                 
-            self.player = Player([Fighter.all[fighter]() for fighter in save[2:5]])
+            config.player = Player([Fighter.all[fighter]() for fighter in save[2:5]])
             
             Intermission.between_levels(stage.stage_num)
 
@@ -51,12 +52,3 @@ class App:
         if value != Menu.BACK:
             Save.delete_save(value)
         return Menu.BACK
-
-    @property
-    def player(self):
-        return self._player
-    @player.setter
-    def player(self,value):
-        self._player = value
-        Intermission.player = value
-        Stage.player = value
