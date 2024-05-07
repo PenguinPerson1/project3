@@ -4,10 +4,10 @@ from lib.saves import Save
 
 
 class Intermission:
-    RETRY_OPTIONS = ["retry","retry level"]
-    EDIT_OPTIONS = ["edit","edit team"]
-    SAVE_OPTIONS = ["save","quit","save and quit","save & quit"]
-    CONTINUE_OPTIONS = ["continue","next","continue to next round"]
+    RETRY_OPTIONS = ["r","retry","retry level"]
+    EDIT_OPTIONS = ["e","edit","edit team"]
+    SAVE_OPTIONS = ["s","q","save","quit","save and quit","save & quit"]
+    CONTINUE_OPTIONS = ["c","continue","next","continue to next round"]
 
     @classmethod
     def restart_level(cls,num_level):
@@ -75,7 +75,7 @@ class Intermission:
                 print(i,end=": ")
                 print(fighter.name)
 
-            swap_out = Menu.return_option(Menu.add_nums([[fighter.name] for fighter in cls.player.fighters]))
+            swap_out = Menu.return_option(Menu.add_nums([[fighter.name,fighter.name[0]] for fighter in cls.player.fighters]))
             print(swap_out)
 
             print("Which fighter would you like to replace them with?")
@@ -83,7 +83,7 @@ class Intermission:
                 print(i,end=": ")
                 print(fighter)
 
-            swap_in = Menu.return_option(Menu.add_nums([[fighter] for fighter in Fighter.available]))
+            swap_in = Menu.return_option(Menu.add_nums([[fighter,fighter[0]] for fighter in Fighter.available]))
 
             cls.swap_fighter(swap_out,list(Fighter.available.values())[swap_in])
 
@@ -93,7 +93,7 @@ class Intermission:
             print("3. Save and Quit")
 
             pivot = Menu.return_option(Menu.add_nums([
-                ["replace","another","replace another"],
+                ["r","replace","another","replace another"],
                 cls.CONTINUE_OPTIONS,
                 cls.SAVE_OPTIONS
             ]))

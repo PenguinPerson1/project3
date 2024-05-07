@@ -26,20 +26,11 @@ class Menu:
             if res == cls.BACK:
                 repeat = True
 
-                
-            # for i in range(len(options)):
-            #     if user_input.lower() in options[i]:
-            #         res = results[i]()
-            #         if res == cls.BACK:
-            #             repeat = True
-            #         break
-
 
     @classmethod
     def return_option(cls,options:list):
         user_input = ''
         # options is a list of any string you will accept
-        print(options)
         user_input = input(">>> ")
         while not any(user_input.lower() in sl for sl in options):
             print("Invalid option please enter a number listed")

@@ -21,10 +21,10 @@ class App:
             "3. Delete Save",
             "4. Quit"],
             Menu.add_nums([
-                ["new","new game"],
-                ["resume","resume game"],
-                ["delete","delete save"],
-                ["quit"]]),[
+                ["n","new","new game"],
+                ["r","resume","resume game"],
+                ["d","delete","delete save"],
+                ["q","quit"]]),[
             lambda: Setup.prep_stage1().run(),
             self.resume_game,
             self.choose_delete,

@@ -79,7 +79,7 @@ class Save:
                 print(f"{i}. After Stage {save[1]} with party {', '.join(save[2:5])}")
             print(f"{len(saves)+1}. Back")
             options = Menu.str_range(len(saves)+1)
-            options[-1].append("back")
+            options[-1].extend(["b","back"])
             pivot = Menu.return_option(options)
 
             if pivot != len(saves):

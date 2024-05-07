@@ -51,7 +51,7 @@ class Stage:
 
         Menu.choose_option(
             ["1. Attack","2. Magic","3. Switch"],
-            Menu.add_nums([["attack"],["magic"],["switch"]]),
+            Menu.add_nums([["a","attack"],["m","magic"],["s","switch"]]),
             [
             self.choose_attack,
             self.choose_magic,
@@ -68,28 +68,32 @@ class Stage:
                 fighter.condition['condition'].onTrigger(fighter,fighter.condition['amount'])
     
     def choose_attack(self):
+        attack_0 = Stage.player.current_fighter.attacks[0]
+        attack_1 = Stage.player.current_fighter.attacks[1]
         return Menu.choose_option([
-            f"1. {Stage.player.current_fighter.attacks[0]}",
-            f"2. {Stage.player.current_fighter.attacks[1]}",
+            f"1. {attack_0}",
+            f"2. {attack_1}",
             "3. Back"],
             Menu.add_nums([
-                [Stage.player.current_fighter.attacks[0].name],
-                [Stage.player.current_fighter.attacks[1].name],
-                ["back"]]),
+                [attack_0.name,attack_0.name[0]],
+                [attack_1.name,attack_1.name[0]],
+                ["b","back"]]),
             [
             lambda: Stage.player.current_fighter_attack(0,self.enemies.current_fighter),
             lambda: Stage.player.current_fighter_attack(1,self.enemies.current_fighter)
             ],True)
     
     def choose_magic(self):
+        magic_0 = Stage.player.current_fighter.magics[0]
+        magic_1 = Stage.player.current_fighter.magics[1]
         return Menu.choose_option([
-            f"1. {Stage.player.current_fighter.magics[0]}",
-            f"2. {Stage.player.current_fighter.magics[1]}",
+            f"1. {magic_0}",
+            f"2. {magic_1}",
             "3. Back"],
             Menu.add_nums([
-                [Stage.player.current_fighter.magics[0].name],
-                [Stage.player.current_fighter.magics[1].name],
-                ["back"]]),
+                [magic_0.name,magic_0.name[0]],
+                [magic_1.name,magic_1.name[0]],
+                ["b","back"]]),
             [
             lambda: Stage.player.current_fighter_magic(0,self.enemies.current_fighter),
             lambda: Stage.player.current_fighter_magic(1,self.enemies.current_fighter)
@@ -101,12 +105,12 @@ class Stage:
             return lambda: cls.player.swap_current_fighter(i)
 
         swap_li = [create_swap(i) for i in range(len(cls.player.alive_fighters))]
-        options_li = [[fighter.name] for fighter in cls.player.alive_fighters]
+        options_li = [[fighter.name,fighter.name[0]] for fighter in cls.player.alive_fighters]
         text_li = [f"{i+1}. {fighter}" for i,fighter in enumerate(cls.player.alive_fighters)]
 
         if if_back: 
             text_li.append(f"{len(cls.player.alive_fighters)+1}: Back")
-            options_li.append(["back"])
+            options_li.append(["b","back"])
 
         return Menu.choose_option(text_li, Menu.add_nums(options_li), swap_li,if_back)
         
