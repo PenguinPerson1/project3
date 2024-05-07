@@ -4,6 +4,10 @@ from lib.saves import Save
 
 
 class Intermission:
+    RETRY_OPTIONS = ["r","retry","retry level"]
+    EDIT_OPTIONS = ["e","edit","edit team"]
+    SAVE_OPTIONS = ["s","q","save","quit","save and quit","save & quit"]
+    CONTINUE_OPTIONS = ["c","continue","next","continue to next round"]
 
     @classmethod
     def restart_level(cls,num_level):
@@ -13,7 +17,9 @@ class Intermission:
             print('1. Retry Level')
             print('2. Quit')
 
-            if Menu.return_option(Menu.str_range(2)) == "1":
+            pivot = Menu.return_option(Menu.add_nums([cls.RETRY_OPTIONS,["quit"]]))
+
+            if pivot == 0:
                 return True
             else:
                 Save.exit_program()
@@ -23,14 +29,18 @@ class Intermission:
             print('2. Edit Team')
             print('3. Save & Quit')
 
-            pivot = Menu.return_option(Menu.str_range(3))
-            print(pivot)
-            if pivot == "1":
+            pivot = Menu.return_option(Menu.add_nums([
+                cls.RETRY_OPTIONS,
+                cls.EDIT_OPTIONS,
+                cls.SAVE_OPTIONS
+            ]))
+
+            if pivot == 0:
                 return True
-            elif pivot == "2":
+            elif pivot == 1:
                 cls.edit_team()
                 return True
-            else:
+            elif pivot == 2:
                 Save.save_exit(cls.num_level,cls.player)
                 return False
 
@@ -44,11 +54,16 @@ class Intermission:
         print('2. Continue to Next Round')
         print('3. Save & Quit')
 
-        pivot = Menu.return_option(Menu.str_range(3),)
-        if pivot == "3":
+        pivot = Menu.return_option(Menu.add_nums([
+            cls.EDIT_OPTIONS,
+            cls.CONTINUE_OPTIONS,
+            cls.SAVE_OPTIONS
+        ]),)
+        if pivot == 2:
             Save.save_exit(cls.num_level,cls.player)
         else:
-            if pivot == "1": cls.edit_team()
+            if pivot == 0: 
+                cls.edit_team()
             next_level.run()
         
     @classmethod
@@ -60,7 +75,7 @@ class Intermission:
                 print(i,end=": ")
                 print(fighter.name)
 
-            swap_out = int(Menu.return_option(Menu.str_range(len(cls.player.fighters)))) - 1
+            swap_out = Menu.return_option(Menu.add_nums([[fighter.name,fighter.name[0]] for fighter in cls.player.fighters]))
             print(swap_out)
 
             print("Which fighter would you like to replace them with?")
@@ -68,7 +83,7 @@ class Intermission:
                 print(i,end=": ")
                 print(fighter)
 
-            swap_in = int(Menu.return_option(Menu.str_range(len(Fighter.available)))) - 1
+            swap_in = Menu.return_option(Menu.add_nums([[fighter,fighter[0]] for fighter in Fighter.available]))
 
             cls.swap_fighter(swap_out,list(Fighter.available.values())[swap_in])
 
@@ -77,12 +92,16 @@ class Intermission:
             print("2. Continue to Next Level")
             print("3. Save and Quit")
 
-            pivot = Menu.return_option(Menu.str_range(3))
-            if pivot == "1":
+            pivot = Menu.return_option(Menu.add_nums([
+                ["r","replace","another","replace another"],
+                cls.CONTINUE_OPTIONS,
+                cls.SAVE_OPTIONS
+            ]))
+            if pivot == 0:
                 repeat = True
-            elif pivot == "2":
+            elif pivot == 1:
                 repeat = False
-            elif pivot == "3":
+            elif pivot == 2:
                 Save.save_exit(cls.num_level,cls.player)
 
     @classmethod
