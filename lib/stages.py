@@ -53,8 +53,8 @@ class Stage:
             ["1. Attack","2. Magic","3. Switch"],
             Menu.add_nums([["a","attack"],["m","magic"],["s","switch"]]),
             [
-            self.choose_attack,
-            self.choose_magic,
+            lambda: self.choose_action("attack"),
+            lambda: self.choose_action("magic"),
             self.choose_switch
             ])
         
@@ -67,36 +67,20 @@ class Stage:
             if fighter.condition != None:
                 fighter.condition['condition'].onTrigger(fighter,fighter.condition['amount'])
     
-    def choose_attack(self):
-        attack_0 = config.player.current_fighter.attacks[0]
-        attack_1 = config.player.current_fighter.attacks[1]
+    def choose_action(self,sub_action):
+        action_0 = getattr(config.player.current_fighter,f'{sub_action}s')[0]
+        action_1 = getattr(config.player.current_fighter,f'{sub_action}s')[1]
         return Menu.choose_option([
-            f"1. {attack_0}",
-            f"2. {attack_1}",
+            f"1. {action_0}",
+            f"2. {action_1}",
             "3. Back"],
             Menu.add_nums([
-                [attack_0.name,attack_0.name[0]],
-                [attack_1.name,attack_1.name[0]],
+                [action_0.name,action_0.name[0]],
+                [action_1.name,action_1.name[0]],
                 ["b","back"]]),
             [
-            lambda: config.player.current_fighter_attack(0,self.enemies.current_fighter),
-            lambda: config.player.current_fighter_attack(1,self.enemies.current_fighter)
-            ],True)
-    
-    def choose_magic(self):
-        magic_0 = config.player.current_fighter.magics[0]
-        magic_1 = config.player.current_fighter.magics[1]
-        return Menu.choose_option([
-            f"1. {magic_0}",
-            f"2. {magic_1}",
-            "3. Back"],
-            Menu.add_nums([
-                [magic_0.name,magic_0.name[0]],
-                [magic_1.name,magic_1.name[0]],
-                ["b","back"]]),
-            [
-            lambda: config.player.current_fighter_magic(0,self.enemies.current_fighter),
-            lambda: config.player.current_fighter_magic(1,self.enemies.current_fighter)
+            lambda: getattr(config.player,f'current_fighter_{sub_action}')(0,self.enemies.current_fighter),
+            lambda: getattr(config.player,f'current_fighter_{sub_action}')(1,self.enemies.current_fighter)
             ],True)
 
     @classmethod
