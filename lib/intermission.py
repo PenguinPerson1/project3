@@ -9,6 +9,7 @@ class Intermission:
     EDIT_OPTIONS = ["e","edit","edit team"]
     SAVE_OPTIONS = ["s","q","save","quit","save and quit","save & quit"]
     CONTINUE_OPTIONS = ["c","continue","next","continue to next round"]
+    DESCRIPTION_OPTIONS = ["g","d","get","descriptions","get descriptions"]
 
     @classmethod
     def restart_level(cls,num_level):
@@ -52,16 +53,20 @@ class Intermission:
         next_level = Setup.ALL[num_level+1]()
         print("Do you want to edit your team?")
         print('1. Edit Team')
-        print('2. Continue to Next Round')
-        print('3. Save & Quit')
+        print('2. Get Descriptions')
+        print('3. Continue to Next Round')
+        print('4. Save & Quit')
 
         pivot = Menu.return_option(Menu.add_nums([
             cls.EDIT_OPTIONS,
+            cls.DESCRIPTION_OPTIONS,
             cls.CONTINUE_OPTIONS,
             cls.SAVE_OPTIONS
         ]),)
-        if pivot == 2:
+        if pivot == 3:
             Save.save_exit(cls.num_level,config.player)
+        elif pivot == 1:
+                cls.get_descriptions()
         else:
             if pivot == 0: 
                 cls.edit_team()
@@ -103,6 +108,23 @@ class Intermission:
                 repeat = False
             elif pivot == 2:
                 Save.save_exit(cls.num_level,config.player)
+
+    @classmethod
+    def get_descriptions(cls):
+        for fighter in Fighter.available.values():
+
+            print("\n -------------------- \n")
+
+            curr = fighter()
+            print(f"Name: {curr.name}")
+            print(f"Type: {curr.type}")
+            print(f"Attack 1: {curr.attacks[0]}")
+            print(f"Attack 2: {curr.attacks[1]}")
+            print(f"Magic 1: {curr.magics[0]}")
+            print(f"Magic 2: {curr.magics[1]}")
+
+        print("")
+        user_input = input(">>> ")
 
     @classmethod
     def swap_fighter(cls,n_out,f_in):
