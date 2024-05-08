@@ -43,7 +43,7 @@ class Intermission:
                 cls.edit_team()
                 return True
             elif pivot == 2:
-                Save.save_exit(cls.num_level,config.player)
+                Save.save_exit(cls.num_level)
                 return False
 
     @classmethod
@@ -67,7 +67,7 @@ class Intermission:
             cls.edit_team,
             cls.get_descriptions,
             next_level.run,
-            lambda: Save.save_exit(cls.num_level,config.player)
+            lambda: Save.save_exit(cls.num_level)
         ])
         
     @classmethod
