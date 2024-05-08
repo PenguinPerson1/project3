@@ -9,6 +9,7 @@ class Intermission:
     EDIT_OPTIONS = ["e","edit","edit team"]
     SAVE_OPTIONS = ["s","q","save","quit","save and quit","save & quit"]
     CONTINUE_OPTIONS = ["c","continue","next","continue to next round"]
+    DESCRIPTION_OPTIONS = ["g","d","get","descriptions","get descriptions"]
 
     @classmethod
     def restart_level(cls,num_level):
@@ -42,7 +43,7 @@ class Intermission:
                 cls.edit_team()
                 return True
             elif pivot == 2:
-                Save.save_exit(cls.num_level,config.player)
+                Save.save_exit(cls.num_level)
                 return False
 
     @classmethod
@@ -50,22 +51,24 @@ class Intermission:
         cls.num_level = num_level
         from lib.setup import Setup
         next_level = Setup.ALL[num_level+1]()
-        print("Do you want to edit your team?")
-        print('1. Edit Team')
-        print('2. Continue to Next Round')
-        print('3. Save & Quit')
 
-        pivot = Menu.return_option(Menu.add_nums([
+        Menu.choose_option([
+            "Do you want to edit your team?",
+            "1. Edit Team",
+            "2. Get Descriptions",
+            "3. Continue to Next Round",
+            "4. Save & Quit"
+        ],Menu.add_nums([
             cls.EDIT_OPTIONS,
+            cls.DESCRIPTION_OPTIONS,
             cls.CONTINUE_OPTIONS,
             cls.SAVE_OPTIONS
-        ]),)
-        if pivot == 2:
-            Save.save_exit(cls.num_level,config.player)
-        else:
-            if pivot == 0: 
-                cls.edit_team()
-            return next_level.run()
+        ]),[
+            cls.edit_team,
+            cls.get_descriptions,
+            next_level.run,
+            lambda: Save.save_exit(cls.num_level)
+        ])
         
     @classmethod
     def edit_team(cls):
@@ -89,20 +92,34 @@ class Intermission:
 
             print('Would you like to replace a different fighter?')
             print("1. Replace Another")
-            print("2. Continue to Next Level")
-            print("3. Save and Quit")
+            print("2. Back")
 
             pivot = Menu.return_option(Menu.add_nums([
                 ["r","replace","another","replace another"],
-                cls.CONTINUE_OPTIONS,
-                cls.SAVE_OPTIONS
+                ["b","back"],
             ]))
             if pivot == 0:
                 repeat = True
             elif pivot == 1:
-                repeat = False
-            elif pivot == 2:
-                Save.save_exit(cls.num_level,config.player)
+                return Menu.BACK
+
+    @classmethod
+    def get_descriptions(cls):
+        for fighter in Fighter.available.values():
+
+            print("\n -------------------- \n")
+
+            curr = fighter()
+            print(f"Name: {curr.name}")
+            print(f"Type: {curr.type}")
+            print(f"Attack 1: {curr.attacks[0]}")
+            print(f"Attack 2: {curr.attacks[1]}")
+            print(f"Magic 1: {curr.magics[0]}")
+            print(f"Magic 2: {curr.magics[1]}")
+
+        print("\nEnter anything to go back:")
+        user_input = input(">>> ")
+        return Menu.BACK
 
     @classmethod
     def swap_fighter(cls,n_out,f_in):

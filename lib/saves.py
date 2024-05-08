@@ -1,5 +1,6 @@
 from . import CONN, CURSOR
 from lib.menu import Menu
+import lib.config as config
 
 class Save:
     @classmethod
@@ -26,26 +27,26 @@ class Save:
 
 
     @classmethod
-    def save_program(cls,stage,party):
+    def save_program(cls,stage):
         sql = "INSERT INTO saves (stage,fighter0,fighter1,fighter2) VALUES ( ? , ? , ? , ? );"
 
-        CURSOR.execute(sql, [stage] + [fighter.name for fighter in party.fighters] + [None for _ in range(3-len(party.fighters))])
+        CURSOR.execute(sql, [stage] + [fighter.name for fighter in config.player.fighters] + [None for _ in range(3-len(config.player.fighters))])
         CONN.commit()
 
     @classmethod
-    def update_save(cls,stage,party):
+    def update_save(cls,stage):
         sql = """UPDATE saves SET stage = ?, fighter0 = ?, fighter1 = ?, fighter2 = ? WHERE id = ?"""
-        CURSOR.execute(sql,[stage] + [fighter.name for fighter in party.fighters] + [None for _ in range(3-len(party.fighters))] + [cls.id])
+        CURSOR.execute(sql,[stage] + [fighter.name for fighter in config.player.fighters] + [None for _ in range(3-len(config.player.fighters))] + [cls.id])
         CONN.commit()
 
     @classmethod
-    def save_exit(cls,stage,party):
+    def save_exit(cls,stage):
         if hasattr(cls,"id"): 
             Menu.choose_option(["Overwrite Previous Save?","1. Yes","2. No"],
             Menu.str_range(2),[
-                lambda: cls.update_save(stage, party),
-                lambda: cls.save_program(stage, party)])
-        else: cls.save_program(stage, party)
+                lambda: cls.update_save(stage),
+                lambda: cls.save_program(stage)])
+        else: cls.save_program(stage)
         cls.exit_program()
 
     @classmethod
