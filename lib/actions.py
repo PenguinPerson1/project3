@@ -1,3 +1,4 @@
+from lib.menu import Menu
 class Action:
     def __init__(self,name,type,strength:int):
         self.name = name
@@ -5,7 +6,8 @@ class Action:
         self.strength = strength
     def __repr__(self):
         return f"{self.name}: deals {self.strength} damage of type {self.type} to the target"
-    def use(self,enemy,_=None):
+    def use(self,enemy,caster):
+        print(f"{caster.name.title()} uses {self.name}")
         if self.strength > 0:
             enemy.take_damage(self.type,self.strength)
 
@@ -24,9 +26,10 @@ class Magic(Action):
     def use(self,enemy,caster):
         if(caster.mp >= self.mp_use):
             caster.mp -= self.mp_use
-            super().use(enemy)
+            super().use(enemy,caster)
             self.extra(caster,enemy)
-        else: print("Not enough mp")
+        else: 
+            print("Not enough mp")
 
 class Attack(Action):
     all = {}

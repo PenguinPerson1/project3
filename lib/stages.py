@@ -14,7 +14,7 @@ class Stage:
         from lib.setup import Setup
         restart = True
         while restart == True:
-            print(f"You've Started Level {self.stage_num}")
+            print(f"\nYou've Started Level {self.stage_num} \n")
             if self.battle_loop():
                 Fighter.add_available(self.enemies_to_add)
                 print('You Won!!!')
@@ -32,6 +32,7 @@ class Stage:
         while len(config.player.alive_fighters) > 0 and len(self.enemies.alive_fighters) > 0:
             if is_player_turn: self.player_turn()
             else: self.enemy_turn()
+            print("\n")
             is_player_turn = not is_player_turn
         return True if(len(self.enemies.alive_fighters)) == 0 else False
 
@@ -40,14 +41,15 @@ class Stage:
         self.trigger_conditions(self.enemies)
 
     def player_turn(self):
+        print("-----------------------")
         print("Enemy Team")
         for fighter in self.enemies.alive_fighters:
             print(fighter)
-        print("Your Party")
+        print("\nYour Party")
         for fighter in config.player.alive_fighters:
             print(fighter)
         # Player acts
-        print('Your Turn')
+        print('\nYour Turn')
 
         Menu.choose_option(
             ["1. Attack","2. Magic","3. Switch"],
@@ -65,6 +67,7 @@ class Stage:
     def trigger_conditions(self,party):
         for fighter in party.fighters:
             if fighter.condition != None:
+                print(f"\n{fighter.name} is {fighter.condition['condition'].description}:")
                 fighter.condition['condition'].onTrigger(fighter,fighter.condition['amount'])
     
     def choose_action(self,sub_action):

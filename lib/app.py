@@ -13,6 +13,7 @@ class App:
         config.player = Setup.prep_stage0()
 
     def run(self):
+        print('\n\n\n')
         self.main_menu()
     
     def main_menu(self):

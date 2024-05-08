@@ -77,11 +77,10 @@ class Intermission:
                 print(fighter.name)
 
             swap_out = Menu.return_option(Menu.add_nums([[fighter.name,fighter.name[0]] for fighter in config.player.fighters]))
-            print(swap_out)
 
             print("Which fighter would you like to replace them with?")
             for i, fighter in enumerate(Fighter.available.keys(),start=1):
-                print(i,end=": ")
+                print(i,end=". ")
                 print(fighter)
 
             swap_in = Menu.return_option(Menu.add_nums([[fighter,fighter[0]] for fighter in Fighter.available]))
@@ -110,4 +109,4 @@ class Intermission:
         f_out = config.player.fighters.pop(n_out)
         config.player.fighters.insert(n_out,f_in())
         print(f_out.name,end=" swaps with ")
-        print(config.player.fighters[n_out].name)
+        print(config.player.fighters[n_out].name, end="\n\n")
