@@ -45,16 +45,16 @@ class Setup:
 
         Attack('stab',Type.all["normal"],40)
 
-        Magic('leech_life',Type.all["grass"],30,30,
+        Magic('leech life',Type.all["grass"],30,30,
               lambda c,_: c.heal(20),
               " and heals caster by 20 hp")
-        Magic('poisoned_blade',Type.all["grass"],20,20,
+        Magic('poisoned blade',Type.all["grass"],20,20,
               lambda _,e: e.set_condition(Condition.all['poison'],10),
               " and poisons target")
 
         goblin = Fighter.add_func("goblin",Type.all["grass"],120,50,
                                   [Attack.all['stab'],Attack.all['stab']],
-                                  [Magic.all['leech_life'],Magic.all['poisoned_blade']])
+                                  [Magic.all['leech life'],Magic.all['poisoned blade']])
 
         return Stage(1,Enemy([goblin()]),["goblin"])
     
@@ -67,15 +67,15 @@ class Setup:
 
         Condition('regen',lambda f,i : f.heal(i),"regenerating")
 
-        Attack('sea_spray',Type.all['water'],25)
+        Attack('sea spray',Type.all['water'],25)
 
-        Magic('water_of_life',Type.all['water'],0,50,
+        Magic('water of life',Type.all['water'],0,50,
               lambda c,_: c.set_condition(Condition.all['regen'],5),
               " and starts healing wounds")
         
         mermaid = Fighter.add_func("mermaid",Type.all['water'],250,50,
-                                 [Attack.all['stab'],Attack.all['sea_spray']],
-                                 [Magic.all['water_of_life'],Magic.all['water_of_life']])
+                                 [Attack.all['stab'],Attack.all['sea spray']],
+                                 [Magic.all['water of life'],Magic.all['water of life']])
         
         return Stage(2,Enemy([mermaid()]),["mermaid"])
     

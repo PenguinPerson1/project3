@@ -45,14 +45,14 @@ class Player(Party):
         print("changed fighter")
     
     def current_fighter_attack(self,atk_num:int,enemy):
-        print("-----------------------\n")
+        print("-----------------------\n\n")
         self.current_fighter.attacks[atk_num].use(enemy,self.current_fighter)
 
     def current_fighter_magic(self,atk_num:int,enemy):
         if self.current_fighter.magics[atk_num].mp_use > self.current_fighter.mp:
             print("Not Enough Mana\n")
             return Menu.BACK
-        print("-----------------------\n")
+        print("-----------------------\n\n")
         self.current_fighter.magics[atk_num].use(enemy,self.current_fighter)
 
     def kill_fighter(self, fighter):

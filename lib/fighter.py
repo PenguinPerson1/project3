@@ -35,6 +35,7 @@ class Fighter:
 
     def set_condition(self,condition,amount):
         if(self.condition == None or self.condition['condition'] != condition or self.condition['amount'] < amount):
+            print(f"{self.name} is now {condition.description}")
             self.condition = {"condition":condition,"amount":amount}
     
     def heal(self,amount):

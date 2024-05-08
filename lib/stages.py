@@ -32,7 +32,7 @@ class Stage:
         while len(config.player.alive_fighters) > 0 and len(self.enemies.alive_fighters) > 0:
             if is_player_turn: self.player_turn()
             else: self.enemy_turn()
-            print("")
+            print("\n")
             is_player_turn = not is_player_turn
         return True if(len(self.enemies.alive_fighters)) == 0 else False
 
@@ -67,6 +67,7 @@ class Stage:
     def trigger_conditions(self,party):
         for fighter in party.fighters:
             if fighter.condition != None:
+                print(f"\n{fighter.name} is {fighter.condition['condition'].description}:")
                 fighter.condition['condition'].onTrigger(fighter,fighter.condition['amount'])
     
     def choose_action(self,sub_action):
