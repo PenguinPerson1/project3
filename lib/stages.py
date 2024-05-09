@@ -37,7 +37,7 @@ class Stage:
         return True if(len(self.enemies.alive_fighters)) == 0 else False
 
     def enemy_turn(self):
-        self.enemies.do_random_action(config.player.current_fighter)
+        self.enemies.do_random_action(config.player)
         self.trigger_conditions(self.enemies)
 
     def player_turn(self):
@@ -82,8 +82,8 @@ class Stage:
                 [action_1.name,action_1.name[0]],
                 ["b","back"]]),
             [
-            lambda: getattr(config.player,f'current_fighter_{sub_action}')(0,self.enemies.current_fighter),
-            lambda: getattr(config.player,f'current_fighter_{sub_action}')(1,self.enemies.current_fighter)
+            lambda: getattr(config.player,f'current_fighter_{sub_action}')(0,self.enemies),
+            lambda: getattr(config.player,f'current_fighter_{sub_action}')(1,self.enemies)
             ],True)
 
     @classmethod

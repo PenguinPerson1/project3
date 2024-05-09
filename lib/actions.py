@@ -6,10 +6,10 @@ class Action:
         self.strength = strength
     def __repr__(self):
         return f"{self.name}: deals {self.strength} damage of type {self.type} to the target"
-    def use(self,enemy,caster):
-        print(f"{caster.name.title()} uses {self.name}")
+    def use(self,enemies,casters):
+        print(f"{casters.current_fighter.name.title()} uses {self.name}")
         if self.strength > 0:
-            enemy.take_damage(self.type,self.strength)
+            enemies.current_fighter.take_damage(self.type,self.strength)
 
 class Magic(Action):
     all = {}
@@ -23,11 +23,11 @@ class Magic(Action):
     def __repr__(self):
         return super().__repr__() + f"{self.desc}. Uses {self.mp_use} mp"
 
-    def use(self,enemy,caster):
-        if(caster.mp >= self.mp_use):
-            caster.mp -= self.mp_use
-            super().use(enemy,caster)
-            self.extra(caster,enemy)
+    def use(self,enemies,casters):
+        if(casters.current_fighter.mp >= self.mp_use):
+            casters.current_fighter.mp -= self.mp_use
+            super().use(enemies,casters)
+            self.extra(casters,enemies)
         else: 
             print("Not enough mp")
 
