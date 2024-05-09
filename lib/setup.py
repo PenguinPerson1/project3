@@ -52,7 +52,7 @@ class Setup:
               lambda _,e: e.current_fighter.set_condition(Condition.all['poison'],10),
               " and poisons target")
 
-        goblin = Fighter.add_func("goblin",Type.all["grass"],120,50,
+        goblin = Fighter.add_func("goblin",Type.all["grass"],120,100,
                                   [Attack.all['stab'],Attack.all['stab']],
                                   [Magic.all['leech life'],Magic.all['poisoned blade']])
 
