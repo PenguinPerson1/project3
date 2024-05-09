@@ -44,16 +44,16 @@ class Player(Party):
         self.current_fighter = self.alive_fighters[index]
         print("changed fighter")
     
-    def current_fighter_attack(self,atk_num:int,enemy):
+    def current_fighter_attack(self,atk_num:int,enemies):
         print("-----------------------\n\n")
-        self.current_fighter.attacks[atk_num].use(enemy,self.current_fighter)
+        self.current_fighter.attacks[atk_num].use(enemies,self)
 
-    def current_fighter_magic(self,atk_num:int,enemy):
+    def current_fighter_magic(self,atk_num:int,enemies):
         if self.current_fighter.magics[atk_num].mp_use > self.current_fighter.mp:
             print("Not Enough Mana\n")
             return Menu.BACK
         print("-----------------------\n\n")
-        self.current_fighter.magics[atk_num].use(enemy,self.current_fighter)
+        self.current_fighter.magics[atk_num].use(enemies,self)
 
     def kill_fighter(self, fighter):
         if super().kill_fighter(fighter):
@@ -62,12 +62,12 @@ class Player(Party):
         Stage.choose_switch(False)
 
 class Enemy(Party):
-    def do_random_action(self,enemy):
+    def do_random_action(self,enemies):
         viable_moves = [self.current_fighter.attacks[0],self.current_fighter.attacks[1]]
         for magic in self.current_fighter.magics:
             if self.current_fighter.mp >= magic.mp_use:
                 viable_moves.append(magic)
-        random.choice(viable_moves).use(enemy,self.current_fighter)
+        random.choice(viable_moves).use(enemies,self)
     
     def kill_fighter(self,fighter):
         if super().kill_fighter(fighter):
